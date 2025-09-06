@@ -162,7 +162,7 @@ cd Remaining-Useful-Life-RUL-Estimation
 
 ## Credits
 
-- MathWorks Predictive Maintenance Toolbox 
+- MATLAB Predictive Maintenance Toolbox 
 
 - NASA Ames PCoE Datasets (C-MAPSS / PHM08 turbofan engine run-to-failure data):  
   https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/  
