@@ -122,25 +122,48 @@ cd Remaining-Useful-Life-RUL-Estimation
   <img width="48%" alt="health_condition" src="https://github.com/user-attachments/assets/bbbcf907-40ed-4c8b-bf93-79fafc028901" style="display: inline-block;">
 </div>
 
-4. Nearest-neighbor selection in HI space
+4. KNN vs. RUL (by % life observed)
+
+| % Observed | KNN (nearest neighbours in HI space) | RUL PDF (mean + 90% CI) |
+|:--:|:--:|:--:|
+| 50% life | ![knn_50](https://github.com/user-attachments/assets/594dce04-028e-417f-aa27-7cebb126888c) | ![rul_50](https://github.com/user-attachments/assets/6e978190-7ca3-42cd-88cc-8c6e4eff8350) |
+| 70% life | ![knn_70](https://github.com/user-attachments/assets/81b2d503-8336-407f-9c99-c37e8240d797) | ![rul_70](https://github.com/user-attachments/assets/392d6a3f-edf9-4f07-a3ef-01d7c521ca35) |
+| 90% life | ![knn_90](https://github.com/user-attachments/assets/8546982f-3244-44eb-8b8b-2ba89436badd) | ![rul_90](https://github.com/user-attachments/assets/1cdf5553-c3f2-4ea8-9fa2-226cf22b7515) |
 
 
-5. RUL probability distributions (with 90% CI) for Examples A, B, C
+| Observation | Mean Absolute Error (MAE) | 90% CI Coverage |
+|:--:|:--:|:--:|
+| 50% life    | Higher error, wide CI      | ~95%            |
+| 70% life    | Improved accuracy          | ~92%            |
+| 90% life    | High accuracy, narrow CI   | ~90%            |
 
-| 50% | <img width="560" height="337" alt="knn_50p" src="https://github.com/user-attachments/assets/550e505e-db49-4138-8a9b-b30b095f257d" />
- | <img width="560" height="337" alt="rul_50p" src="https://github.com/user-attachments/assets/e7b1c846-cb39-4b2d-b9d4-00c54e3dc165" />
- |
-| :---: | :---: | :---: |
-| 70% |  |  |
-| :---: | :---: | :---: |
-| 90% |  |  |
+--
 
-![KNN — Example A](https://uk.mathworks.com/help/examples/predmaint/win64/SimilarityBasedRULExample_09.png)
-![KNN — Example B](https://uk.mathworks.com/help/examples/predmaint/win64/SimilarityBasedRULExample_11.png)
-![KNN — Example C](https://uk.mathworks.com/help/examples/predmaint/win64/SimilarityBasedRULExample_13.png)
+## Challenges & Mitigations
 
-Example Output Table
-Observation	Mean Absolute Error (MAE)	90% CI Coverage
-50% life	Higher error, wide CI	~95%
-70% life	Improved accuracy	~92%
-90% life	High accuracy, narrow CI	~90%
+| Challenge | Mitigation |
+|-----------|------------|
+| Engines operate under multiple regimes → sensor drift | Cluster regimes and normalise within each cluster |
+| Noisy or inconsistent sensor channels | Feature scoring → select only robust indicators |
+| Misaligned degradation progression | Offset and smooth health indicators |
+| Mid-life predictions have wide uncertainty | Provide RUL PDFs with confidence bands, update as new data arrives |
+
+---
+
+## Next Steps
+
+- Experiment with alternative distance metrics (Dynamic Time Warping, Mahalanobis).  
+- Explore deep learning-based HI extraction (autoencoders, LSTMs).  
+- Calibrate confidence intervals via conformal prediction.  
+- Extend to Python implementation (PyTorch/tslearn) for open-source portability.  
+- Package workflow as a deployable web service for maintenance engineers.  
+
+---
+
+## Credits
+
+- MathWorks Predictive Maintenance Toolbox 
+
+- NASA Ames PCoE Datasets (C-MAPSS / PHM08 turbofan engine run-to-failure data):  
+  https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/  
+
